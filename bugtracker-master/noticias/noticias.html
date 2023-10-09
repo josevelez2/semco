@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Noticias</title>
+</head>
+<body>
+    <h1>Noticias</h1>
+    <ul>
+        {% for noticia in noticias %}
+            <li>
+                <h2>{{ noticia.titulo }}</h2>
+                <p>{{ noticia.descripcion }}</p>
+                <img src="{{ noticia.imagen.url }}" alt="{{ noticia.titulo }}">
+                <a href="{% url 'ver_noticia' noticia.id %}">Ver más</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html

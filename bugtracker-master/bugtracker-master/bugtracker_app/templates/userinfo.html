@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bug Zapper User History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .ticket-section {
+            margin-top: 20px;
+        }
+
+        .ticket-section h2 {
+            text-align: center;
+        }
+
+        .ticket-section p {
+            margin: 5px 0;
+        }
+
+        .ticket-section hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1><a href="/">HOME</a></h1>
+    <h1><a href="{% url 'logout' %}">LOGOUT</a></h1>
+    <div class="container">
+        <h1>The User - {{ filer }}</h1>
+
+        <div class="ticket-section">
+            <h2>Reported Tickets</h2>
+            {% for data in filerhistory %}
+                {% if "N" in data.status %}
+                    <p>Title: <a href="/ticketinfo/{{ data.id }}">{{ data.title }}</a></p>
+                    <p>Ticket Id: {{ data.id }}</p>
+                    <p>Reported By: <a href="/filerinfo/{{ filer.id }}">{{ data.ticketfiler }}</a></p>
+                    <p>Date Submitted: {{ data.datetime }}</p>
+                    <p>Status: {{ data.status }}</p>
+                    <p>Assigned To: {{ data.assignedto }}</p>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="ticket-section">
+            <h2>In Progress Tickets</h2>
+            {% for data in filerhistory %}
+                {% if "INP" in data.status %}
+                    <p>Title: <a href="/ticketinfo/{{ data.id }}/">{{ data.title }}</a></p>
+                    <p>Ticket Id: {{ data.id }}</p>
+                    <p>Reported By: <a href="/filerinfo/{{ filer.id }}">{{ data.ticketfiler }}</a></p>
+                    <p>Date Submitted: {{ data.datetime }}</p>
+                    <p>Status: {{ data.status }}</p>
+                    <p>Assigned To: {{ data.assignedto }}</p>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="ticket-section">
+            <h2>Completed Tickets</h2>
+            {% for data in filerhistory %}
+                {% if "D" in data.status %}
+                    <p>Title: <a href="/ticketinfo/{{ data.id }}">{{ data.title }}</a></p>
+                    <p>Ticket Id: {{ data.id }}</p>
+                    <p>Reported By: <a href="/filerinfo/{{ filer.id }}">{{ data.ticketfiler }}</a></p>
+                    <p>Date Submitted: {{ data.datetime }}</p>
+                    <p>Status: {{ data.status }}</p>
+                    <p>Assigned To: {{ data.assignedto }}</p>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+

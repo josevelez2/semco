@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema De Tickets</title>
+     <style>
+    /* Estilos generales */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    /* Estilos para el contenedor de estadísticas */
+    .stats-container {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    /* Estilos para el cuadro de estadísticas */
+
+    .stats-container h2-0 {
+        background-color: #6CCA98;
+        color: #fff;
+        padding: 35px;
+        border-radius: 40px;
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+        font-size: 20px;
+        
+
+    }
+
+    .stats-container h2-1 {
+        background-color: #19D3C5;
+        color: #fff;
+        padding: 35px;
+        border-radius: 40px;
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+
+    .stats-container h2-2 {
+        background-color: #637977;
+        color: #fff;
+        padding: 35px;
+        border-radius: 40px;
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .stats-container h2-3 {
+        background-color: #00C4B3;
+        color: #fff;
+        padding: 35px;
+        border-radius: 40px;
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .stats-container h2-4 {
+        background-color: #00C08B;
+        color: #fff;
+        padding: 35px;
+        border-radius: 40px;
+        display: inline-block;
+        margin: 10px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+
+    }
+
+    .button-57 {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #18181a;
+        color: #00C08B;
+        display: inline-block;
+        font-size: 15px;
+        line-height: 15px;
+        padding: 18px 18px 17px;
+        text-decoration: none;
+        cursor: pointer;
+        background: #fff;
+        user-select: none;
+        webkit-user-select: none;
+        touch-action: manipulation;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+    .button-57 span:first-child {
+        position: relative;
+        transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
+        z-index: 10;
+    }
+    .button-57 span:last-child {
+        color: white;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
+        z-index: 100;
+        opacity: 0;
+        top: 50%;
+        left: 50%;
+        transform: translateY(225%) translateX(-50%);
+        height: 14px;
+        line-height: 13px;
+    }
+    .button-57:after {
+        content: "";
+        position: absolute;
+        bottom: -50%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        transform-origin: bottom center;
+        transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
+        transform: skewY(9.3deg) scaleY(0);
+        z-index: 50;
+    }
+    .button-57:hover:after {
+        transform-origin: bottom center;
+        transform: skewY(9.3deg) scaleY(2);
+    }
+    .button-57:hover span:last-child {
+        transform: translateX(-50%) translateY(-100%);
+        opacity: 1;
+        transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+    }
+
+    .BotonHome {
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde la parte superior */
+    left: 10px; /* Ajusta la distancia desde la izquierda */
+    }
+
+    .BotonLogout {
+        position: absolute;
+        top: 10px; /* Ajusta la distancia desde la parte superior */
+        right: 10px; /* Ajusta la distancia desde la derecha */
+    }
+
+
+    a {
+        text-decoration: none;
+        color: #007bff;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Encabezado */
+    .header {
+        background-color: #007bff;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+    }
+    .header a {
+        margin: 0 10px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.3s ease-in-out;
+    }
+    .header a:hover {
+        background-color: #0056b3;
+    }
+
+    /* Contenedor de estadísticas */
+    .stats-container {
+        text-align: right;
+        margin: 20px;
+    }
+    .stats-container h2 {
+        font-size: 24px;
+        margin: 5px 0;
+    }
+
+    /* Contenedor de tickets */
+    .ticket-container {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 10px;
+    }
+    .ticket-container h2 {
+        font-size: 20px;
+        color: #333;
+        margin-top: 0;
+    }
+
+    .ticket-container p {
+        margin: 10px 0;
+    }
+    .ticket-container a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .ticket-container a:hover {
+        text-decoration: underline;
+    }
+
+    /* Botón de crear solicitud */
+    .create-ticket-button {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .create-ticket-button a {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease-in-out;
+    }
+    .create-ticket-button a:hover {
+        background-color: #0056b3;
+    }
+
+    .HistorialSolicitudes {
+        text-align: center;
+
+    }
+
+.CrearSoli a{
+    display: inline-block;
+    padding: 10px 10px;
+    background-color: #00C08B;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+  
+}
+
+.CrearSoli a:hover {
+    background-color: #0056b3;
+
+}
+.stats-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las estadísticas se ajusten automáticamente en pantallas más pequeñas */
+    justify-content: center; /* Centra las estadísticas horizontalmente */
+    align-items: center; /* Centra las estadísticas verticalmente */
+    background-color: #f9f9f9; /* Color de fondo */
+    border: 1px solid #ddd; /* Borde */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+    margin: 20px 0; /* Margen superior e inferior */
+}
+.stats-container h2 {
+    flex: 1; /* Permite que las estadísticas se ajusten automáticamente en el contenedor */
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/* Estilos generales */
+/* Estilos generales */
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+/* Estilos para los títulos */
+h2 {
+    font-size: 28px;
+    margin: 20px 0 10px;
+    text-align: center;
+    color: #333;
+}
+
+/* Estilos para los párrafos */
+p {
+    font-size: 16px;
+    margin: 5px 0;
+    text-align: center;
+    color: #666;
+}
+
+/* Estilos para alinear a la derecha */
+.align-right {
+    text-align: right;
+}
+
+/* Estilos para alinear al centro */
+.align-center {
+    text-align: center;
+}
+
+/* Estilos para cada tipo de solicitud */
+.solicitud {
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius:
+}
+
+
+ .logo {
+    width: 80px; 
+    height: 60px; 
+    margin-right: 10px; 
+}
+
+ .menu {
+   
+        padding: 10px 0; /* Agrega un espacio interno superior e inferior */
+        text-align: center; /* Centra el texto horizontalmente */
+        background-color: #333;
+
+    }
+
+    .menu ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .menu ul li {
+        display: inline;
+        margin-right: 20px; /* Agrega un espacio entre los elementos del menú */
+    }
+
+    .menu ul li a {
+             text-decoration: none;
+        color: #fff; /* Cambia el color del texto */
+        font-weight: bold;
+        font-size: 16px; /* Ajusta el tamaño del texto */
+        transition: color 0.3s ease-in-out;
+    }
+
+    .menu ul li a:hover {
+        color: #0056b3; /* Cambia el color del texto al pasar el mouse */
+    }
+       .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        /* Estilos para los títulos */
+        h2 {
+            font-size: 28px;
+            margin: 20px 0 10px;
+            text-align: center;
+            color: #333;
+        }
+
+        /* Estilos para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #19D3C5;;
+            color: #fff;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Estilos para enlaces en la tabla */
+        table a:hover {
+            text-decoration: underline;
+        }
+
+</style>
+
+
+</head>
+
+<body>
+    <div class="menu">
+    <ul>
+        <li><a href="{% url 'compras' %}">Solicitudes</a></li>
+         <li><a href="{% url 'direccion_tecnica' %}">Compras</a></li>
+        <li><a href="{% url 'direccion_tecnica' %}">Dirección Técnica</a></li>
+        <li><a href="{% url 'noticias' %}">Noticias</a></li>
+        <li><a href="{% url 'direccion_tecnica' %}">perfiles</a></li>
+    </ul>
+</div>
+
+    <div class="HistorialSolicitudes">
+        <img src="https://i.postimg.cc/MpJtY7WP/LOGOTIPO.jpg" alt="Logo" class="logo">
+        <h1>Historial de Solicitudes</h1>
+    </div>
+<div class= "BotonHome">
+    <button class="button-57" role="button" ,>
+        <a href="/" class="button-link"></a>
+        <span class="text">HOME</span>
+        <span>Volver a inicio</span>
+    </button>
+</div>
+<div class= "BotonLogout">
+
+   <button class="button-57" role="button">
+    <a href="{% url 'logout' %}" class="button-link">
+        <span class="text">LOGOUT</span>
+        <span>Salir</span>
+    </a>
+</button>
+</div>
+<title> Sistema De Tickets </title>
+<div class="stats-container" >
+        <h2-0>Total solicitudes: <p>{{Total_count}}</p></h2-0>
+        <h2-1>Solicitudes nuevas: <p>{{N_count}}</p></h2-1>
+        <h2-2>Solicitudes en progreso: <p>{{InP_count}}</p></h2-2>
+        <h2-3>Solicitudes completadas: <p>{{D_count}}</p></h2-3>
+        <h2-4>Solicitudes Invalidas: <p>{{InV_count}}</p></h2-4>
+    
+</div>
+<div class= "HistorialSolicitudes">
+    <div class="CrearSoli">
+        <p><a href="{% url 'createticket' %}">Crear Solicitud</a></p>
+    </div>
+<div class="container">
+    <h2>Nuevas Solicitudes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Solicitud</th>
+                <th>Prioridad</th>
+                <th>ID de Solicitud</th>
+                <th>Reportado por</th>
+                <th>Fecha de Envío</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in data %}
+                {% if "N" in ticket.status %}
+                    <tr>
+                        <td><a href="/ticketinfo/{{ticket.id}}/">{{ticket.title}}</a></td>
+                        <td>{{ticket.priority}}</td>
+                        <td>{{ticket.id}}</td>
+                        <td><a href="filerinfo/{{ticket.ticketfiler.id}}">{{ticket.ticketfiler}}</a></td>
+                        <td>{{ticket.datetime}}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <h2>Solicitudes en Progreso</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Solicitud</th>
+                <th>Prioridad</th>
+                <th>ID de Solicitud</th>
+                <th>Reportado por</th>
+                <th>Fecha de Envío</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in data %}
+                {% if "InP" in ticket.status %}
+                    <tr>
+                        <td><a href="/ticketinfo/{{ticket.id}}/">{{ticket.title}}</a></td>
+                        <td>{{ticket.priority}}</td>
+                        <td>{{ticket.id}}</td>
+                        <td><a href="filerinfo/{{ticket.ticketfiler.id}}">{{ticket.ticketfiler}}</a></td>
+                        <td>{{ticket.datetime}}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <h2>Solicitudes Completadas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Solicitud</th>
+                <th>Prioridad</th>
+                <th>ID de Solicitud</th>
+                <th>Reportado por</th>
+                <th>Fecha de Envío</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in data %}
+                {% if "D" in ticket.status %}
+                    <tr>
+                        <td><a href="/ticketinfo/{{ticket.id}}/">{{ticket.title}}</a></td>
+                        <td>{{ticket.priority}}</td>
+                        <td>{{ticket.id}}</td>
+                        <td><a href="filerinfo/{{ticket.ticketfiler.id}}">{{ticket.ticketfiler}}</a></td>
+                        <td>{{ticket.datetime}}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    <div class="solicitud align-center">
+        {% for ticket in data %}
+            {% if "INV" in ticket.status %}
+                <h2>Solicitud Invalida</h2>
+                <p>Solicitud: <a href="/ticketinfo/{{ticket.id}}/">{{ticket.title}}</a></p>
+                <td>{{ticket.priority}}</td>
+                <p>ID de solicitud: {{ticket.id}}</p>
+                <p>Reportado por: <a href="filerinfo/{{ticket.ticketfiler.id}}">{{ticket.ticketfiler}}</a></p>
+                <p class="fecha">Fecha de enviado: {{ticket.datetime}}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</div>
+</body>
+</html>
+

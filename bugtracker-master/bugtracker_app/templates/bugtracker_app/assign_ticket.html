@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Ticket</title>
+</head>
+<body>
+    <h1>Asignar Ticket</h1>
+    <p>Selecciona un usuario para asignar el ticket:</p>
+    <form method="post">
+    {% csrf_token %}
+    <select name="user_id">
+        {% for user in users %}
+            <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Asignar">
+</form>
+</body>
+</html>

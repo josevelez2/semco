@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bug Zapper System</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilos para la barra de navegación */
+        .navbar {
+            background-color:  #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        /* Estilos para el contenido principal */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .titulo{
+            margin: 0 auto;
+            padding: 5px;
+            text-align: center;
+            font-style: initial;
+
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para los botones de filtro */
+        .filter-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .filter-buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #637977;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .filter-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para la lista de solicitudes */
+        .ticket-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ticket-item {
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .ticket-item h2 {
+            font-size: 18px;
+            margin: 0;
+            color: #000000;
+        }
+
+        .ticket-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .titulito{
+            color: #19D3C5;
+            border-color:#19D3C5 ;            
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">HOME</a>
+        <a href="{% url 'logout' %}">LOGOUT</a>
+    </div>
+
+    <div class="container">
+        <div class="titulo">
+        <h1>Usuario {{ filer }}</h1>
+        </div>
+
+        <div class="filter-buttons">
+       
+            <button onclick="showReportedTickets()">Reportadas</button>
+            <button onclick="showCompletedTickets()">Completadas</button>
+            <button onclick="showAllTickets()">Todas</button>
+        </div>
+
+        <ul class="ticket-list" id="ticket-list">
+            {% for data in filerhistory %}
+                <li class="ticket-item" data-status="{{ data.status }}">
+                    <h2 class = "titulito"><a href="/ticketinfo/{{ data.id }}">{{ data.title }}</a></h2>
+                    <p>ID de Solicitud: {{ data.id }}</p>
+                    <p>Reportado por: <a href="/filerinfo/{{ filer.id }}">{{ data.ticketfiler }}</a></p>
+                    <p>Fecha de Enviado: {{ data.datetime }}</p>
+                    <p>Estado: {{ data.status }}</p>
+                    <p>Asignado a: {{ data.assignedto }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        function showAllTickets() {
+            showTickets("");
+        }
+
+        function showReportedTickets() {
+            showTickets("N");
+        }
+
+        function showCompletedTickets() {
+            showTickets("D");
+        }
+
+        function showTickets(status) {
+            const ticketItems = document.querySelectorAll('.ticket-item');
+            ticketItems.forEach((item) => {
+                const itemStatus = item.getAttribute('data-status');
+                if (status === "" || itemStatus === status) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        showAllTickets(); // Muestra todas las solicitudes al cargar la página
+    </script>
+</body>
+</html>
+

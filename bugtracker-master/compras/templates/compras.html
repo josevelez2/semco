@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitudes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .button {
+            padding: 15px 40px;
+            font-size: 18px;
+            background-color: #00C4B3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px;
+            width: 250px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+        }
+
+        /* Estilo para la página principal */
+        .main-page {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container main-page">
+        <h1>Por favor, seleccione el área de su ticket:</h1>
+        <div class="button-container">
+            <button class="button" onclick="redirectToProject('Gestión Humana')">Gestión Humana</button>
+            <button class="button" onclick="redirectToProject('Gerencia')">Gerencia</button>
+            <button class="button" onclick="redirectToProject('Dirección Técnica')">Dirección Técnica</button>
+            <button class="button" onclick="redirectToProject('Dirección Aseguramiento y Calidad')">Dirección Aseguramiento y Calidad</button>
+            <button class="button" onclick="redirectToProject('Comercial')">Comercial</button>
+            <button class="button" onclick="redirectToProject('Administrativos y Finanzas')">Administrativos y Finanzas</button>
+            <button class="button" onclick="redirectToProject('Operaciones')">Operaciones</button>
+        </div>
+    </div>
+
+    <script>
+        function redirectToProject(area) {
+            // Redirige a tu proyecto cuando se hace clic en el botón
+            // Puedes hacer algo con la variable "area" si lo deseas
+            window.location.href = "/";
+        }
+    </script>
+</body>
+</html>
+

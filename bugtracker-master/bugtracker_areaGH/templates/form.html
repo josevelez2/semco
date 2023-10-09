@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bug Zapper Ticket System</title>
+    <style>
+            /* Reset de estilos para eliminar márgenes y relleno predeterminados */
+body, h1, h2, p, form {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav h1 {
+    margin: 0;
+    padding: 0 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+form input[type="submit"] {
+    background-color: #00C4B3;
+    color: #fff;
+    border: none;
+    padding: 10px 30px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+ .button-57 {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #18181a;
+        color: #00C08B;
+        display: inline-block;
+        font-size: 15px;
+        line-height: 15px;
+        padding: 18px 18px 17px;
+        text-decoration: none;
+        cursor: pointer;
+        background: #fff;
+        user-select: none;
+        webkit-user-select: none;
+        touch-action: manipulation;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+    .button-57 span:first-child {
+        position: relative;
+        transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
+        z-index: 10;
+    }
+    .button-57 span:last-child {
+        color: white;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
+        z-index: 100;
+        opacity: 0;
+        top: 50%;
+        left: 50%;
+        transform: translateY(225%) translateX(-50%);
+        height: 14px;
+        line-height: 13px;
+    }
+    .button-57:after {
+        content: "";
+        position: absolute;
+        bottom: -50%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        transform-origin: bottom center;
+        transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
+        transform: skewY(9.3deg) scaleY(0);
+        z-index: 50;
+    }
+    .button-57:hover:after {
+        transform-origin: bottom center;
+        transform: skewY(9.3deg) scaleY(2);
+    }
+    .button-57:hover span:last-child {
+        transform: translateX(-50%) translateY(-100%);
+        opacity: 1;
+        transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+    }
+
+    .BotonHome {
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde la parte superior */
+    left: 10px; /* Ajusta la distancia desde la izquierda */
+    }
+
+    .BotonLogout {
+        position: absolute;
+        top: 10px; /* Ajusta la distancia desde la parte superior */
+        right: 10px; /* Ajusta la distancia desde la derecha */
+    }
+    .contenedor-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Ajusta la distancia superior según tus necesidades */
+}
+
+
+    .logo {
+    width: 80px; 
+    height: 60px; 
+    margin-right: 10px; 
+}
+
+header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+    </style>
+</head>
+
+<body>
+   <h3><a href="/">HOME</a></h3>
+   <div class="contenedor-1">
+        <img src="https://i.postimg.cc/MpJtY7WP/LOGOTIPO.jpg" alt="Logo" class="logo">
+    </div>
+<div class= "BotonLogout">
+    
+   <button class="button-57" role="button">
+    <a href="{% url 'logout' %}" class="button-link">
+        <span class="text">LOGOUT</span>
+        <span>Salir</span>
+    </a>
+    </button>
+</div>
+<title> Bug Tracker </title>
+<div align="center">
+    {% block content %}
+
+        <div class="container">
+            <h1>Ingresa tu solicitud</h1>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input value="submit" type="submit">
+            </form>
+        </div>
+    {% endblock %}
+    <div>
+
+
+
+

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Bug Zapper System</title>
+    <style>
+        /* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para los enlaces HOME y LOGOUT */
+h1 a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+    margin-right: 10px;
+}
+
+h1 a:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para el título del usuario */
+h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-top: 20px;
+    color: #333;
+}
+
+/* Estilos para los bloques de tickets */
+div {
+    text-align: center;
+    margin-top: 20px;
+}
+
+h2 {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 10px 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+p {
+    margin: 10px 0;
+}
+
+h1.align-center {
+    text-align: center;
+}
+
+h1.separator {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #999;
+}
+
+/* Estilos para los diferentes estados de los tickets */
+div[data-status="N"],
+div[data-status="INP"],
+div[data-status="D"] {
+    display: none;
+}
+
+/* Estilos para los botones de filtrar */
+div.buttons {
+    margin-top: 20px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+ .button-57 {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #18181a;
+        color: #00C08B;
+        display: inline-block;
+        font-size: 15px;
+        line-height: 15px;
+        padding: 18px 18px 17px;
+        text-decoration: none;
+        cursor: pointer;
+        background: #fff;
+        user-select: none;
+        webkit-user-select: none;
+        touch-action: manipulation;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+    .button-57 span:first-child {
+        position: relative;
+        transition: color 600ms cubic-bezier(0.48, 0, 0.12, 1);
+        z-index: 10;
+    }
+    .button-57 span:last-child {
+        color: white;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        transition: all 500ms cubic-bezier(0.48, 0, 0.12, 1);
+        z-index: 100;
+        opacity: 0;
+        top: 50%;
+        left: 50%;
+        transform: translateY(225%) translateX(-50%);
+        height: 14px;
+        line-height: 13px;
+    }
+    .button-57:after {
+        content: "";
+        position: absolute;
+        bottom: -50%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: black;
+        transform-origin: bottom center;
+        transition: transform 600ms cubic-bezier(0.48, 0, 0.12, 1);
+        transform: skewY(9.3deg) scaleY(0);
+        z-index: 50;
+    }
+    .button-57:hover:after {
+        transform-origin: bottom center;
+        transform: skewY(9.3deg) scaleY(2);
+    }
+    .button-57:hover span:last-child {
+        transform: translateX(-50%) translateY(-100%);
+        opacity: 1;
+        transition: all 900ms cubic-bezier(0.48, 0, 0.12, 1);
+    }
+
+    .BotonHome {
+    position: absolute;
+    top: 10px; /* Ajusta la distancia desde la parte superior */
+    left: 10px; /* Ajusta la distancia desde la izquierda */
+    }
+
+    .BotonLogout {
+        position: absolute;
+        top: 10px; /* Ajusta la distancia desde la parte superior */
+        right: 10px; /* Ajusta la distancia desde la derecha */
+    }
+    .contenedor-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Ajusta la distancia superior según tus necesidades */
+}
+
+
+    .logo {
+    width: 80px; 
+    height: 60px; 
+    margin-right: 10px; 
+}
+    </style>
+  </head>
+
+  <body>
+     <h3><a href="/">HOME</a></h3>
+<div class= "BotonLogout">
+
+   <button class="button-57" role="button">
+    <a href="{% url 'logout' %}" class="button-link">
+        <span class="text">LOGOUT</span>
+        <span>Salir</span>
+    </a>
+    </button>
+</div>
+<div class="contenedor-1">
+        <img src="https://i.postimg.cc/MpJtY7WP/LOGOTIPO.jpg" alt="Logo" class="logo">
+    </div>
+
+    <div align="center">
+        <h1>El usuario  {{filer}}</h1>
+        <div>
+            {%for data in filerhistory%}
+                {%if "N" in data.status%}
+                    <h2 align="center">Solicitud reportada:</h2>
+                    <p>Titulo: <a href="/ticketinfo/{{data.id}}">{{data.title}}</a></p>
+                    <p>ID Solicitud: {{data.id}}</p>
+                    <p>Reportado por: <a href="/filerinfo/{{filer.id}}">{{data.ticketfiler}}</a></p>
+                    <p>Fecha de Enviado: {{data.datetime}}</p>
+                    <p>Estado: {{data.status}}</p>
+                    <p>Asignado a: {{data.assignedto}}</p>
+                    <h1 align="center"></h1>
+                {%endif%}
+                {%endfor%}
+        </div>
+        <div>
+            {%for data in filerhistory%}
+                {%if "INP" in data.status%}
+                <h2 align="center">Solicitud en progreso:</h2>
+                <p>Titulo: <a href="/ticketinfo/{{data.id}}/">{{data.title}}</a></p>
+                <p>ID de Solicitud: {{data.id}}</p>
+                <p>Reportado por: <a href="/filerinfo/{{filer.id}}">{{data.ticketfiler}}</a></p>
+                <p>Fecha de enviado: {{data.datetime}}</p>
+                <p>Estado: {{data.status}}</p>
+                <p>Asignado a: {{data.assignedto}}</p>
+                <h1 align="center"></h1>
+            {%endif%}
+            {%endfor%}
+        </div>
+        <div>
+            {%for data in filerhistory%}
+                {%if "D" in data.status%}
+                <h2 align="center">Solicitud completada:</h2>
+                <p>Titulo: <a href="/ticketinfo/{{data.id}}">{{data.title}}</a></p>
+                <p>ID de Solicitud: {{data.id}}</p>
+                <p>Reportado por: <a href="/filerinfo/{{filer.id}}">{{data.ticketfiler}}</a></p>
+                <p>Fecha de enviado: {{data.datetime}}</p>
+                <p>Estado: {{data.status}}</p>
+                <p>Asignado a: {{data.assignedto}}</p>
+                <h1 align="center"></h1>
+            {%endif%}
+            {%endfor%}
+        </div>
+    </div>
+  </body>
+</html>

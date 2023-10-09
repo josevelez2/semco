@@ -1,0 +1,75 @@
+# bugtracker_app/views.py
+from django.shortcuts import render, reverse, HttpResponseRedirect
+from django.contrib.auth import login, logout, authenticate
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from bugtracker_app.forms import LoginForm, TicketForm, EditTicketForm, SignupForm
+from bugtracker_app.models import TicketModel, CustomUser
+
+@login_required
+def index(request):
+    data = TicketModel.objects.all().order_by("-datetime")
+    Total_count = TicketModel.objects.count()
+    N_count = 0
+    InP_count = 0
+    D_count = 0
+    InV_count = 0
+    for ticket in data:
+        if ticket.status == "InP":
+            InP_count += 1
+        if ticket.status == "D":
+            D_count += 1
+        if ticket.status == "InV":
+            InV_count += 1
+        if ticket.status == "N":
+            N_count += 1
+    return render(request, 'index.html', {"data": data,
+                                         "Total_count": Total_count,
+                                         "InP_count": InP_count,
+                                         "N_count": N_count,
+                                         "D_count": D_count,
+                                         "InV_count": InV_count})
+
+def login_view(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(
+                request,
+                username=data['username'],
+                password=data['password'],
+            )
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(reverse('home'))
+            else:
+                messages.error(request, "Invalid credentials")
+                return HttpResponseRedirect(reverse('login'))
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {"form": form})
+
+@staff_member_required
+def signup_view(request):
+    if request.method == "POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = CustomUser.objects.create_user(
+                username=data['username'],
+                password=data['password'],
+            )
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(reverse('login'))
+    form = SignupForm()
+    return render(request, 'signup.html', {"form": form})
+
+# Otras vistas...
+
+@login_required
+def ticketinfo(request, ticketid):
+    ticketinfo = TicketModel.objects.get(id=ticketid)
+    return render(request, "ticket.html", {"ticketinfo": ticketinfo})

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bug Zapper Ticket System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .header {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .header a {
+            text-decoration: none;
+            color: #007BFF;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .ticket-summary {
+            text-align: right;
+        }
+
+        .ticket-summary h2 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .ticket-summary p {
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .submit-ticket {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .submit-ticket h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .submit-ticket p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .ticket-list {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .ticket-list h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .ticket-list p {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .ticket-list a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/">HOME</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+        <h1>Bug Zapper Ticket System</h1>
+        
+        <div class="ticket-summary">
+            <h2>Ticket Summary</h2>
+            <p>Total tickets: {{ Total_count }}</p>
+            <p>New tickets: {{ N_count }}</p>
+            <p>In progress tickets: {{ InP_count }}</p>
+            <p>Completed tickets: {{ D_count }}</p>
+            <p>Invalid tickets: {{ InV_count }}</p>
+        </div>
+
+        <div class="submit-ticket">
+            <h1>Submit a Ticket</h1>
+            <p><a href="{% url 'createticket' %}">SUBMIT TICKET</a></p>
+        </div>
+
+        <div class="ticket-list">
+            {% for ticket in data %}
+                {% if "N" in ticket.status %}
+                    <h2>New Tickets</h2>
+                    <p>Title: <a href="/ticketinfo/{{ ticket.id }}/">{{ ticket.title }}</a></p>
+                    <p>Ticket Id: {{ ticket.id }}</p>
+                    <p>Reported By: <a href="filerinfo/{{ ticket.ticketfiler.id }}">{{ ticket.ticketfiler }}</a></p>
+                    <p>Date Submitted: {{ ticket.datetime }}</p>
+                {% endif %}
+                {% if "INP" in ticket.status %}
+                    <h2>Ticket In Progress</h2>
+                    <p>Title: <a href="/ticketinfo/{{ ticket.id }}/">{{ ticket.title }}</a></p>
+                    <p>Ticket Id: {{ ticket.id }}</p>
+                    <p>Reported By: <a href="filerinfo/{{ ticket.ticketfiler.id }}">{{ ticket.ticketfiler }}</a></p>
+                    <p>Date Submitted: {{ ticket.datetime }}</p>
+                {% endif %}
+                {% if "D" in ticket.status %}
+                    <h2>Completed Ticket</h2>
+                    <p>Title: <a href="/ticketinfo/{{ ticket.id }}/">{{ ticket.title }}</a></p>
+                    <p>Ticket Id: {{ ticket.id }}</p>
+                    <p>Reported By: <a href="filerinfo/{{ ticket.ticketfiler.id }}">{{ ticket.ticketfiler }}</a></p>
+                    <p>Date Submitted: {{ ticket.datetime }}</p>
+                {% endif %}
+                {% if "INV" in ticket.status %}
+                    <h2>Invalid Ticket</h2>
+                    <p>Title: <a href="/ticketinfo/{{ ticket.id }}/">{{ ticket.title }}</a></p>
+                    <p>Ticket Id: {{ ticket.id }}</p>
+                    <p>Reported By: <a href="filerinfo/{{ ticket.ticketfiler.id }}">{{ ticket.ticketfiler }}</a></p>
+                    <p>Date Submitted: {{ ticket.datetime }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

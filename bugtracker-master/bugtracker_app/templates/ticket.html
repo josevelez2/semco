@@ -1,0 +1,233 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Zapper System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilos para la barra de navegación */
+        .navbar {
+    background-color:  #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+        }
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+        .logo {
+            width: 80px;
+            height: 60px;
+            margin-right: 10px;
+        }
+
+       
+
+        /* Estilos para la sección de comentarios */
+        .comment-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .comment-section h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #comment-box {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        #submit-comment {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #submit-comment:hover {
+            background-color: #0056b3;
+        }
+
+        #comments p {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+
+        /* Estilos para la información del ticket */
+        .ticket-info {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .ticket-info h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .ticket-info p {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+
+        .ticket-info a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .ticket-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilos para el contenedor 1 */
+        .contenedor-1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }  #submit-comment {
+            background-color: #00C08B;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Estilos para el área de comentarios */
+        #comments {
+            text-align: left;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+          header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">HOME</a>
+        <a href="{% url 'logout' %}">LOGOUT</a>
+    </div>
+    <div class="contenedor-1">
+        <img src="https://i.postimg.cc/MpJtY7WP/LOGOTIPO.jpg" alt="Logo" class="logo">
+    </div>
+    
+    <div align="center" class="ticket-info">
+        <h2>{{ ticketinfo.title }}</h2>
+        <p class="description">Descripción: {{ ticketinfo.description }}</p>
+        <p class="status">Estado del Ticket: {{ ticketinfo.get_status_display }}</p>
+        <p class="reported-by">Reportado por: <a href="/filerinfo/{{ ticketinfo.ticketfiler.id }}">{{ ticketinfo.ticketfiler }}</a></p>
+        <p class="date">Fecha de Enviado: {{ ticketinfo.datetime }}</p>
+        <p class="assigned-to">Asignado a: {{ ticketinfo.assignedto }}</p>
+         
+
+
+        {% if ticketinfo.status != "D" and ticketinfo.status != "INV" and ticketinfo.status != "N" %}
+        <p class="being-worked-on">Siendo trabajada por: <a href="/filerinfo/{{ ticketinfo.assignedto.id }}">{{ ticketinfo.assignedto }}</a></p>
+        <a class="complete-ticket" href="/ticketcomplete/{{ ticketinfo.id }}/complete/{{ user.id }}">Completar Ticket</a><br>
+        <a class="mark-invalid" href="/ticketinvalid/{{ ticketinfo.id }}/invalid/{{ user.id }}">Marcar Inválido</a><br>
+        <a class="edit-ticket" href="/ticketedit/{{ ticketinfo.id }}/edit/">Editar Ticket</a><br>
+        {% endif %}
+        {% if "INV" not in ticketinfo.status and "N" not in ticketinfo.status and "INP" not in ticketinfo.status %}
+      
+        
+        
+        {% endif %}
+        {% if not ticketinfo.assignedto and not ticketinfo.completedby and "INV" not in ticketinfo.status %}
+        <a class="assign-yourself" href="/ticketassignment/{{ ticketinfo.id }}/inprogress/{{ user.id }}">Asignatelo a ti mismo</a><br>
+        <a class="edit-ticket" href="/ticketedit/{{ ticketinfo.id }}/edit/">Editar Ticket</a><br>
+        <a class="complete-ticket" href="/ticketcomplete/{{ ticketinfo.id }}/complete/{{ user.id }}">Completar Ticket</a><br>
+     
+        {% endif %}
+    </div>
+    <div class="comment-section">
+        <h2>Comentarios</h2>
+        <textarea id="comment-box" rows="4" cols="50"></textarea>
+        <button id="submit-comment">Agregar Comentario</button>
+        <div id="comments">
+            <!-- Los comentarios se mostrarán aquí -->
+        </div>
+    </div>
+<script>
+    // Función para agregar un comentario
+    function addComment(commentText, username) {
+        var commentsSection = document.getElementById("comments");
+        var newComment = document.createElement("p");
+        newComment.textContent = username + ": " + commentText; // Agregamos el nombre de usuario
+        commentsSection.appendChild(newComment);
+    }
+
+    // Evento al cargar la página para cargar comentarios almacenados localmente
+    window.addEventListener("load", function () {
+        var ticketId = "{{ ticketinfo.id }}"; // Reemplaza esto con la identificación única de tu ticket
+        var storedComments = localStorage.getItem("comments_" + ticketId);
+        if (storedComments) {
+            var comments = JSON.parse(storedComments);
+            comments.forEach(function (comment) {
+                // Los comentarios guardados deben incluir el nombre de usuario, por ejemplo: "usuario: comentario"
+                var parts = comment.split("*");
+                if (parts.length === 2) {
+                    var username = parts[0].trim();
+                    var commentText = parts[1].trim();
+                    addComment(commentText, username);
+                }
+            });
+        }
+    });
+
+    // Evento al hacer clic en el botón de agregar comentario
+    document.getElementById("submit-comment").addEventListener("click", function () {
+        var commentText = document.getElementById("comment-box").value;
+        var username = "{{ request.user.username }}"; // Obtenemos el nombre de usuario actual desde Django
+        addComment(commentText, username);
+
+        // Guardar el comentario en el almacenamiento local
+        var ticketId = "{{ ticketinfo.id }}"; // Reemplaza esto con la identificación única de tu ticket
+        var storedComments = localStorage.getItem("comments_" + ticketId);
+        var comments = storedComments ? JSON.parse(storedComments) : [];
+        comments.push(username + "* " + commentText); // Agregamos el nombre de usuario al comentario
+        localStorage.setItem("comments_" + ticketId, JSON.stringify(comments));
+
+        document.getElementById("comment-box").value = ""; // Limpiar el campo de comentario después de agregarlo
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block object-tools %}
+  {{ block.super }}
+  <a href="{% url download_pdf_url %}" class="button" style="margin-left: 5px;">Descargar PDF</a>
+{% endblock %}
