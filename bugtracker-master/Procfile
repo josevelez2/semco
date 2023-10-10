@@ -1,1 +1,1 @@
-web: gunicorn bugtracker-master.wsgi:application -c gunicorn_config.py
+web: gunicorn bugtracker-master.wsgi --log-file -
